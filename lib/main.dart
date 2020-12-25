@@ -26,22 +26,19 @@ class MyHomePage extends StatelessWidget {
 
   final Image myPicture = Image.asset('images/image.png');
 
-  static final colorTween = ColorTween(begin: Colors.red, end: Colors.blue);
+   static final doubleTween = Tween<double>(begin: 0, end: 2 * pi);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: TweenAnimationBuilder<Color>(
-          curve: Curves.bounceIn,
-          onEnd: ()=> print("All done") ,
-          child: myPicture,
+        child: TweenAnimationBuilder<double>(
           duration: const Duration(seconds: 5),
-          tween: colorTween,
-          builder: (_, Color color, Widget child) {
-            return ColorFiltered(
-              colorFilter: ColorFilter.mode(color, BlendMode.modulate),
-              child: child,
+          tween: doubleTween,
+          builder: (_, double angle, __) {
+            return Transform.rotate(
+              angle: angle,
+              child: myPicture,
             );
           },
         ),
