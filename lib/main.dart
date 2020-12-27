@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -21,31 +20,23 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class MyHomePage extends StatelessWidget {
-
-  final Image myPicture = Image.asset('images/image.png');
-
-  static final colorTween = ColorTween(begin: Colors.red, end: Colors.blue);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: TweenAnimationBuilder<Color>(
-          curve: Curves.bounceIn,
-          onEnd: ()=> print("All done") ,
-          child: myPicture,
-          duration: const Duration(seconds: 5),
-          tween: colorTween,
-          builder: (_, Color color, Widget child) {
-            return ColorFiltered(
-              colorFilter: ColorFilter.mode(color, BlendMode.modulate),
-              child: child,
+        body: TweenAnimationBuilder(
+          child: Text("This is an Animation text",
+            style: TextStyle(
+                fontSize: 36, color: Colors.black, fontWeight: FontWeight.bold),),
+          tween: Tween<double>(begin: 0, end: 1),
+          duration: Duration(milliseconds: 500),
+          builder: (BuildContext context, double _val, Widget child) {
+            return Opacity(
+              opacity: _val,
+              child:
+              Padding(padding: EdgeInsets.only(top: _val * 20), child: child),
             );
           },
-        ),
-      ),
-    );
+        ));
   }
 }
